@@ -1,0 +1,7 @@
+{
+  "name": "mateApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
