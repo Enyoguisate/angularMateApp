@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
+import { Member, MembersProvider } from '../../providers/members/members';
+
+
 
 @Component({
   selector: 'page-home',
@@ -9,25 +12,34 @@ export class HomePage {
   maximum: number = 2;
   minimum: number = 0;
 
-  winner: any = { name: '', index: 0 };
+  winner: Member;
 
-  mobileTeam: any = [
-    { name: 'Rama', index: 0 },
-    { name: 'Isma', index: 1 },
-    { name: 'Victor', index: 2 },
-  ]
+  members: Member[];
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController, public membersProvider: MembersProvider, public modalCtrl: ModalController) {
   }
 
-  sort(){
-    var randomnumber = Math.floor(Math.random() * (this.maximum - this.minimum + 1)) + this.minimum;
-    this.mobileTeam.forEach(member => {
-      if(member.index === randomnumber){
-        this.winner = member;
-      }
+  loadData(){
+    this.membersProvider.getMembers().then((members: Member[])=>{
+      this.members = members;
     });
-    
+  }
+
+  addMember(){
+    let modal = this.modalCtrl.create('MemberPage');
+    modal.onDidDismiss(()=>{
+      this.loadData();
+    });
+    modal.present();
+  }
+
+  ionViewDidLoad(){
+    this.loadData();
+  }
+  
+  sort(){
+    this.membersProvider.sortear().then((winner: Member)=>{
+      this.winner = winner;
+    });
   }
 }

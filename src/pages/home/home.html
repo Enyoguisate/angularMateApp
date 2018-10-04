@@ -1,14 +1,72 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      A quien le toca preparar el mate????
+      ¿Quién prepara el mate?
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (click)="sort()">Sortear</button>
-    <ion-item>
-      <label>Winner: {{winner.name}}</label>
-    </ion-item>
+
+    <ion-card *ngIf="winner" text-center>
+
+        <ion-item>
+          <h2>Ganador: <b>¡{{winner.name}}!</b></h2>
+        </ion-item>
+      
+        <img center [src]="winner.photo ? winner.photo : 'assets/imgs/no_avatar.jpg'">
+      
+        <ion-card-content>
+          <p>Tenés que hacer los mates, no te hagas el vivo.</p>
+        </ion-card-content>
+
+        <!-- <ion-row>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>12 Likes</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>4 Comments</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <ion-note>
+              11h ago
+            </ion-note>
+          </ion-col>
+        </ion-row> -->
+      
+      </ion-card>
+      <div text-center>
+          <button ion-button color="danger" (click)="sort()">¡Sortear!</button>
+      </div>
+  <!-- <button ion-button color="danger" (click)="sort()">¡Sortear!</button>
+  <ion-item *ngIf="winner">
+    <label>Ganador: {{winner.name}}</label>
+    <img [src]="winner.photo ? winner.photo : 'assets/imgs/no_avatar.jpg'">
+  </ion-item> -->
+
+  <ion-card>
+    <ion-card-header>
+      <ion-item>
+          Miembros
+          <button ion-button icon-only item-right clear (click)="addMember()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+        </ion-item>    </ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let m of members">
+        <ion-avatar item-start>
+          <img [src]="m.photo ? m.photo : 'assets/imgs/no_avatar.jpg'">
+        </ion-avatar>
+        <h2>{{m.name}}</h2>
+        <p>{{m.description}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
 </ion-content>
